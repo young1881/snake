@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Snake Game</title>
+</head>
+<body>
+    <canvas id="canvas" style="background: Black;position:absolute;margin:auto;left:0;right:0;top:0;bottom:0;"></canvas>
+    <iframe src="https://ghbtns.com/github-btn.html?user=young1881&repo=snake_game&type=star" frameborder="0"
+        scrolling="0" width="150" height="20" title="GitHub"></iframe>
+    <script>
+        <!-- where to set your parameters -->
+        var block_size = 20, block_num = 30, velocity = 100, snack_color = "Violet", target_color = "Red";
+        var height = block_num * block_size, width = height;
+        var canvas = document.getElementById("canvas");
+        canvas.setAttribute("height", height);
+        canvas.setAttribute("width", width);
+        var snake = [block_num + 2, block_num + 1], target = block_num + 3, direction = 1, next, context = canvas.getContext("2d");
+        function draw(position, color) {
+            context.fillStyle = color;
+            context.fillRect(position % block_num * block_size + 1, ~~(position / block_num) * block_size + 1, block_size - 2, block_size - 2);
+        }
+        document.onkeydown = function (e) {
+            direction = snake[1] - snake[0] == (next = [-1, -block_num, 1, block_num][(e || event).keyCode - 37] || direction) ? direction : next
+        };
+        !function () {
+            snake.unshift(next = snake[0] + direction);
+            if (snake.indexOf(next, 1) > 0 || next < 0 || next > block_num * block_num - 1 || direction == 1 && next %
+                block_num == 0 || direction == -1 && next % block_num == block_num - 1)
+                return alert("GAME OVER");
+            draw(next, snack_color);
+            if (next == target) {
+                while (snake.indexOf(target = ~~(Math.random() * block_num * block_num)) >= 0);
+                draw(target, target_color);
+            } else
+                draw(snake.pop(), "Black");
+            setTimeout(arguments.callee, velocity);
+        }();
+    </script>
+</body>
+</html>

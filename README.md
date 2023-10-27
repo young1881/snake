@@ -1,2 +1,2 @@
-# snake
-a Snake game powered by bit operation
+# Snake Game
+A snake game within 40 lines.
